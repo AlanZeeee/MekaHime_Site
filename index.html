@@ -27,10 +27,11 @@
     html, body { height: 100%; }
     body {
       margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 70% -10%, #1b1f2a22, transparent), var(--bg);
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('Assets/MainPageBanner.png') center/cover no-repeat fixed;
       color: var(--fg);
       -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
       display: grid; grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
     }
     header, footer { width: 100%; max-width: 1100px; margin: 0 auto; padding: 20px 24px; }
     main { width: 100%; max-width: 1100px; margin: 0 auto; padding: 20px 24px; display: grid; place-items: center; }
@@ -50,10 +51,37 @@
     .nav-cta a:hover { opacity: 1; border-bottom-color: #ffffff44; }
 
     /* HERO */
-    .hero { display: grid; gap: 22px; text-align: center; max-width: 800px; margin: 64px auto 48px; }
+    .hero { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 40px; 
+      align-items: center; 
+      min-height: 80vh; 
+      margin: 0 auto; 
+    }
+    .hero-content { 
+      display: grid; 
+      gap: 24px; 
+      text-align: left; 
+    }
     .eyebrow { color: var(--muted); letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
-    h1.hero-title { font-size: clamp(32px, 6vw, 64px); line-height: 1.05; margin: 0; font-weight: 800; }
-    .subtitle { color: #d1d5db; font-size: clamp(14px, 2.4vw, 18px); line-height: 1.6; }
+    h1.hero-title { 
+      font-size: clamp(36px, 7vw, 72px); 
+      line-height: 1.05; 
+      margin: 0; 
+      font-weight: 900; 
+      background: linear-gradient(135deg, #ffffff, #e5e7eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(255,255,255,0.3);
+    }
+    .subtitle { 
+      color: #e5e7eb; 
+      font-size: clamp(16px, 2.8vw, 20px); 
+      line-height: 1.6; 
+      font-weight: 300;
+    }
 
     /* EMAIL CARD */
     .card { background: linear-gradient(180deg, #0f1219, #0b0d13); border: 1px solid var(--card-border); border-radius: 18px; padding: 20px; max-width: 720px; margin: 12px auto 0; box-shadow: 0 0 0 1px #ffffff08 inset, 0 25px 70px #0009; }
@@ -75,10 +103,23 @@
     .fineprint { opacity: .8; }
 
     /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { 
+        grid-template-columns: 1fr; 
+        gap: 32px; 
+        min-height: 70vh; 
+        text-align: center; 
+      }
+      .hero-content { text-align: center; }
+      h1.hero-title { font-size: clamp(28px, 8vw, 48px); }
+    }
+    
     @media (max-width: 640px) {
       .form-row { grid-template-columns: 1fr; }
       .btn { width: 100%; }
       header, main, footer { padding: 16px; }
+      .hero { min-height: 60vh; }
+      h1.hero-title { font-size: clamp(24px, 6vw, 36px); }
     }
   </style>
 </head>
@@ -105,10 +146,13 @@
 
   <main>
     <section class="hero">
-      <span class="eyebrow">Building AI Companions from the Isekai</span>
-      <h1 class="hero-title">AI companions with <span style="border-bottom: 2px solid #ffffff44">realistic emotions</span> and intentions.</h1>
-      <p class="subtitle">MekaHime is a passion project by two UC&nbsp;Berkeley students to make AI companions feel <em>alive</em> — persistent, emotive, and present.
-      <br/>Imagine she is always there, waiting for you.</p>
+      <div></div> <!-- Empty div for spacing -->
+      <div class="hero-content">
+        <span class="eyebrow">Building AI Companions from the Isekai</span>
+        <h1 class="hero-title">A portal to her world,<br/>on your desk</h1>
+        <p class="subtitle">MekaHime is a passion project by two UC&nbsp;Berkeley students to make AI companions feel <em>alive</em> — persistent, emotive, and present.
+        <br/>Imagine she is always there, waiting for you.</p>
+      </div>
     </section>
 
     <section id="waitlist" class="card" aria-labelledby="join-title">

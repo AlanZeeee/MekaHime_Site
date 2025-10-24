@@ -27,7 +27,8 @@
     html, body { height: 100%; }
     body {
       margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('Assets/MainPageBanner.png') center/cover no-repeat fixed;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('./Assets/MainPageBanner.png') center/cover no-repeat fixed;
+      background-color: var(--bg);
       color: var(--fg);
       -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
       display: grid; grid-template-rows: auto 1fr auto;
@@ -152,6 +153,8 @@
         <h1 class="hero-title">A portal to her world,<br/>on your desk</h1>
         <p class="subtitle">MekaHime is a passion project by two UC&nbsp;Berkeley students to make AI companions feel <em>alive</em> — persistent, emotive, and present.
         <br/>Imagine she is always there, waiting for you.</p>
+        <!-- Debug: Test if image loads -->
+        <img src="./Assets/MainPageBanner.png" alt="Banner" style="max-width: 200px; height: auto; margin-top: 20px; border: 2px solid white;" />
       </div>
     </section>
 

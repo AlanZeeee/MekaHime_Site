@@ -84,6 +84,39 @@
       font-weight: 300;
     }
 
+    /* ABOUT SECTION */
+    .about-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      position: relative;
+      transition: background 0.5s ease;
+    }
+    .about-section.video-background {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('./Assets/Animation/frame_001.png') center/cover no-repeat fixed;
+    }
+    .about-content {
+      max-width: 800px;
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .about-title {
+      font-size: clamp(24px, 5vw, 48px);
+      font-weight: 800;
+      color: var(--fg);
+      margin: 0 0 24px 0;
+      line-height: 1.2;
+    }
+    .about-subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: #d1d5db;
+      line-height: 1.6;
+      margin: 0;
+      font-weight: 300;
+    }
+
     /* EMAIL CARD */
     .card { background: linear-gradient(180deg, #0f1219, #0b0d13); border: 1px solid var(--card-border); border-radius: 18px; padding: 20px; max-width: 720px; margin: 12px auto 0; box-shadow: 0 0 0 1px #ffffff08 inset, 0 25px 70px #0009; }
     .card h3 { margin: 0 0 8px; font-size: 18px; }
@@ -184,9 +217,14 @@
     <section class="hero">
       <div></div> <!-- Empty div for spacing -->
       <div class="hero-content">
-        <span class="eyebrow">Building AI Companions from the Isekai</span>
         <h1 class="hero-title">A portal to her world,<br/>on your desk</h1>
-        <p class="subtitle">MekaHime is a passion project by two UC&nbsp;Berkeley students to make AI companions feel <em>alive</em> — persistent, emotive, and present.
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="about-content">
+        <h2 class="about-title">Building AI Companions from the Isekai</h2>
+        <p class="about-subtitle">MekaHime is a passion project by two UC&nbsp;Berkeley students to make AI companions feel <em>alive</em> — persistent, emotive, and present.
         <br/>Imagine she is always there, waiting for you.</p>
       </div>
     </section>
@@ -268,9 +306,21 @@
     }
     
     function handleScroll() {
+      const aboutSection = document.querySelector('.about-section');
       const animationSection = document.getElementById('animation-section');
-      const rect = animationSection.getBoundingClientRect();
+      
+      // Handle about section video background
+      const aboutRect = aboutSection.getBoundingClientRect();
       const windowHeight = window.innerHeight;
+      
+      if (aboutRect.top < windowHeight && aboutRect.bottom > 0) {
+        aboutSection.classList.add('video-background');
+      } else {
+        aboutSection.classList.remove('video-background');
+      }
+      
+      // Handle animation section
+      const rect = animationSection.getBoundingClientRect();
       
       // Check if animation section is in view
       if (rect.top < windowHeight && rect.bottom > 0) {

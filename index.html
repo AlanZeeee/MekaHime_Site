@@ -103,6 +103,41 @@
     footer { color: var(--muted); font-size: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid #121622; }
     .fineprint { opacity: .8; }
 
+    /* ANIMATION SECTION */
+    .animation-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: var(--bg);
+      margin: 40px 0;
+    }
+    .animation-container {
+      width: 100%;
+      max-width: 1200px;
+      height: 80vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .animation-frame {
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: background-image 0.1s ease;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .animation-frame.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .hero { 
@@ -153,8 +188,6 @@
         <h1 class="hero-title">A portal to her world,<br/>on your desk</h1>
         <p class="subtitle">MekaHime is a passion project by two UC&nbsp;Berkeley students to make AI companions feel <em>alive</em> — persistent, emotive, and present.
         <br/>Imagine she is always there, waiting for you.</p>
-        <!-- Debug: Test if image loads -->
-        <img src="./Assets/MainPageBanner.png" alt="Banner" style="max-width: 200px; height: auto; margin-top: 20px; border: 2px solid white;" />
       </div>
     </section>
 
@@ -169,6 +202,12 @@
         <div class="helper">No spam. Unsubscribe anytime.</div>
         <div class="status" id="status"></div>
       </form>
+    </section>
+
+    <section id="animation-section" class="animation-section">
+      <div class="animation-container">
+        <div class="animation-frame" id="animation-frame"></div>
+      </div>
     </section>
 
     <section id="community" class="socials" aria-label="Community links">
@@ -209,6 +248,65 @@
         status.textContent = 'Network error. Please try again.';
       }
     });
+
+    // Scroll-triggered animation
+    const FRAME_SKIP = 5; // Skip every 5 frames - easily adjustable
+    const TOTAL_FRAMES = 596; // Total number of frames
+    const ANIMATION_FRAMES = Math.floor(TOTAL_FRAMES / FRAME_SKIP); // Number of frames to use
+    
+    let isAnimating = false;
+    let currentFrame = 0;
+    
+    function getFrameNumber(index) {
+      return String(index * FRAME_SKIP + 1).padStart(3, '0');
+    }
+    
+    function updateAnimationFrame() {
+      const frameElement = document.getElementById('animation-frame');
+      const frameNumber = getFrameNumber(currentFrame);
+      frameElement.style.backgroundImage = `url('./Assets/Animation/frame_${frameNumber}.png')`;
+    }
+    
+    function handleScroll() {
+      const animationSection = document.getElementById('animation-section');
+      const rect = animationSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Check if animation section is in view
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        if (!isAnimating) {
+          isAnimating = true;
+          animationSection.querySelector('.animation-frame').classList.add('visible');
+        }
+        
+        // Calculate scroll progress through the animation section
+        const sectionHeight = rect.height;
+        const scrollProgress = Math.max(0, Math.min(1, (windowHeight - rect.top) / (windowHeight + sectionHeight)));
+        
+        // Map scroll progress to frame index
+        const frameIndex = Math.floor(scrollProgress * ANIMATION_FRAMES);
+        
+        if (frameIndex !== currentFrame && frameIndex < ANIMATION_FRAMES) {
+          currentFrame = frameIndex;
+          updateAnimationFrame();
+        }
+      } else {
+        if (isAnimating) {
+          isAnimating = false;
+          animationSection.querySelector('.animation-frame').classList.remove('visible');
+          currentFrame = 0;
+        }
+      }
+    }
+    
+    // Initialize animation with first frame
+    updateAnimationFrame();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial check
+    handleScroll();
   </script>
 
   <!-- Optional: Cloudflare Web Analytics (free). Replace token if you enable it.

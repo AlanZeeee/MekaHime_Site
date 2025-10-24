@@ -488,13 +488,13 @@
     let loadedFrames = 0;
     let allFramesLoaded = false;
     
-    // Preload only key animation frames (much smaller download)
+    // Preload first 30 frames (filtered by FRAME_SKIP)
     function preloadAnimationFrames() {
       const promises = [];
-      const keyFrames = [0, Math.floor(ANIMATION_FRAMES/4), Math.floor(ANIMATION_FRAMES/2), Math.floor(ANIMATION_FRAMES*3/4), ANIMATION_FRAMES-1];
+      const framesToPreload = Math.min(30, ANIMATION_FRAMES); // Preload first 30 frames or all frames if less than 30
       
-      keyFrames.forEach(frameIndex => {
-        const frameNumber = String(START_FRAME + frameIndex * FRAME_SKIP).padStart(4, '0');
+      for (let i = 0; i < framesToPreload; i++) {
+        const frameNumber = String(START_FRAME + i * FRAME_SKIP).padStart(4, '0');
         const img = new Image();
         
         const promise = new Promise((resolve, reject) => {
@@ -512,14 +512,14 @@
         
         img.src = `./Assets/Animation/${frameNumber}.png`;
         promises.push(promise);
-      });
+      }
       
       return Promise.all(promises);
     }
     
     function updateLoadingProgress() {
-      const totalKeyFrames = 5; // We're only loading 5 key frames
-      const progress = (loadedFrames / totalKeyFrames) * 100;
+      const framesToPreload = Math.min(30, ANIMATION_FRAMES); // Match the preload function
+      const progress = (loadedFrames / framesToPreload) * 100;
       loadingBar.style.width = `${progress}%`;
       loadingPercentage.textContent = `${Math.round(progress)}%`;
       

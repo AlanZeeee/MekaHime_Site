@@ -10,8 +10,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="/og-image.png" />
   <meta name="theme-color" content="#000000" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="./Assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     :root {
       --bg: #0a0a0a;
       --fg: #f5f5f5;
@@ -27,28 +33,31 @@
     html, body { height: 100%; }
     body {
       margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('./Assets/MainPageBanner.png') center/cover no-repeat fixed;
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--fg);
       -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
       display: grid; grid-template-rows: auto 1fr auto;
       min-height: 100vh;
     }
     header, footer { width: 100%; max-width: 1100px; margin: 0 auto; padding: 20px 24px; }
+    header { position: relative; z-index: 20; }
     main { width: 100%; max-width: 1100px; margin: 0 auto; padding: 20px 24px; display: grid; place-items: center; }
 
     /* NAV */
     .nav {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+      padding: 20px 0;
+      position: relative;
+      z-index: 20;
     }
     .logo {
-      display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--fg);
+      display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--fg);
     }
-    .logo-mark { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--card-border); border-radius: 12px; background: var(--card); box-shadow: 0 10px 30px #0008 inset, 0 0 0 1px #fff0; }
-    .logo-mark svg { width: 22px; height: 22px; }
-    .logo-type { font-weight: 700; letter-spacing: .3px; }
+    .logo-mark { width: 66px; height: 66px; display: grid; place-items: center; }
+    .logo-mark img { width: 66px; height: 66px; object-fit: contain; }
+    .logo-type { font-family: 'Orbitron', monospace; font-weight: 900; letter-spacing: .3px; font-size: 24px; }
 
-    .nav-cta a { color: var(--fg); opacity: .8; text-decoration: none; margin-left: 18px; font-size: 14px; border-bottom: 1px dashed transparent; }
+    .nav-cta a { color: var(--fg); opacity: .8; text-decoration: none; margin-left: 36px; font-size: 18px; border-bottom: 1px dashed transparent; }
     .nav-cta a:hover { opacity: 1; border-bottom-color: #ffffff44; }
 
     /* HERO */
@@ -56,14 +65,30 @@
       display: grid; 
       grid-template-columns: 1fr 1fr; 
       gap: 40px; 
-      align-items: center; 
-      min-height: 80vh; 
-      margin: 0 auto; 
+      align-items: start; 
+      min-height: 200vh; 
+      margin: 0 auto;
+      position: relative;
     }
     .hero-content { 
       display: grid; 
       gap: 24px; 
       text-align: left; 
+      padding-top: 50vh;
+      transform: translateY(-50%);
+    }
+    .global-animation-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .global-animation-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .eyebrow { color: var(--muted); letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
     h1.hero-title { 
@@ -89,52 +114,128 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: var(--bg);
+      justify-content: flex-start;
       position: relative;
-      transition: background 0.5s ease;
-    }
-    .about-section.video-background {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('./Assets/Animation/frame_001.png') center/cover no-repeat fixed;
+      overflow: hidden;
+      padding: 0 24px;
     }
     .about-content {
       max-width: 800px;
-      text-align: center;
-      padding: 40px 24px;
+      text-align: left;
+      padding: 40px;
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
     }
     .about-title {
-      font-size: clamp(24px, 5vw, 48px);
-      font-weight: 800;
-      color: var(--fg);
+      font-size: clamp(36px, 7vw, 72px);
+      line-height: 1.05;
       margin: 0 0 24px 0;
-      line-height: 1.2;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff, #e5e7eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(255,255,255,0.3);
     }
     .about-subtitle {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: #d1d5db;
+      color: #e5e7eb;
+      font-size: clamp(16px, 2.8vw, 20px);
       line-height: 1.6;
       margin: 0;
       font-weight: 300;
     }
 
     /* EMAIL CARD */
-    .card { background: linear-gradient(180deg, #0f1219, #0b0d13); border: 1px solid var(--card-border); border-radius: 18px; padding: 20px; max-width: 720px; margin: 12px auto 0; box-shadow: 0 0 0 1px #ffffff08 inset, 0 25px 70px #0009; }
-    .card h3 { margin: 0 0 8px; font-size: 18px; }
+    .card { background: rgba(0, 0, 0, 0.3); border: none; border-radius: 12px; padding: 20px 40px; max-width: 1000px; margin: 60px auto 0; backdrop-filter: blur(10px); }
+    .card h3 { 
+      margin: 0 0 8px; 
+      font-size: clamp(24px, 5vw, 48px); 
+      line-height: 1.05; 
+      font-weight: 900; 
+      background: linear-gradient(135deg, #ffffff, #e5e7eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(255,255,255,0.3);
+    }
+    .card h4 { 
+      margin: 0 0 8px; 
+      font-size: 18px; 
+      font-weight: 700; 
+      color: var(--fg);
+    }
+    .card p { 
+      margin: 0 0 24px; 
+      font-size: 16px; 
+      font-weight: 400; 
+      color: var(--fg);
+      opacity: 0.9;
+    }
     .form-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 12px; }
     .input { width: 100%; padding: 14px 14px; font-size: 16px; border-radius: 12px; border: 1px solid #2a3142; background: #0c0f15; color: var(--fg); outline: none; }
     .input:focus { border-color: #3c455d; box-shadow: 0 0 0 4px var(--ring); }
     .btn { padding: 14px 18px; font-size: 16px; font-weight: 700; border-radius: 12px; border: 1px solid #3b3f47; background: #ffffff; color: #0b0d13; cursor: pointer; }
     .btn:hover { background: var(--cta-hover); }
-    .helper { color: var(--muted); font-size: 12px; margin-top: 8px; }
+    .helper { color: #ffffff; font-size: 12px; margin-top: 8px; }
     .status { margin-top: 10px; font-size: 14px; min-height: 20px; }
 
     /* LINKS */
-    .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 18px; }
-    .link { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--card-border); background: #0d1117; color: var(--fg); text-decoration: none; font-size: 14px; }
-    .link:hover { border-color: #333a49; box-shadow: 0 0 0 4px #ffffff12; }
+    .socials { 
+      background: rgba(0, 0, 0, 0.3); 
+      border-radius: 12px; 
+      padding: 40px; 
+      max-width: 800px; 
+      margin: 200px auto 0; 
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    .socials h3 {
+      margin: 0 0 24px; 
+      font-size: clamp(18px, 3.75vw, 36px); 
+      line-height: 1.05; 
+      font-weight: 900; 
+      background: linear-gradient(135deg, #ffffff, #e5e7eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(255,255,255,0.3);
+    }
+    .social-links {
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+      gap: 20px; 
+    }
+    .link { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 10px; 
+      padding: 16px 20px; 
+      border-radius: 12px; 
+      border: 1px solid var(--card-border); 
+      background: rgba(0, 0, 0, 0.2); 
+      color: var(--fg); 
+      text-decoration: none; 
+      font-size: 14px; 
+      backdrop-filter: blur(5px);
+    }
+    .link:hover { 
+      border-color: #333a49; 
+      box-shadow: 0 0 0 4px #ffffff12; 
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .social-logo {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
 
-    footer { color: var(--muted); font-size: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid #121622; }
+    footer { color: #ffffff; font-size: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid #ffffff; }
     .fineprint { opacity: .8; }
+    .disclaimer { color: #ffffff; font-size: 10px; text-align: right; opacity: 0.7; line-height: 1.4; max-width: 600px; }
 
     /* ANIMATION SECTION */
     .animation-section {
@@ -162,9 +263,10 @@
       background-repeat: no-repeat;
       background-position: center;
       transition: background-image 0.1s ease;
-      opacity: 0;
-      transform: translateY(50px);
+      opacity: 1;
+      transform: translateY(0);
       transition: opacity 0.8s ease, transform 0.8s ease;
+      background-color: #333; /* Dark background to see the section */
     }
     .animation-frame.visible {
       opacity: 1;
@@ -197,12 +299,7 @@
     <nav class="nav">
       <a class="logo" href="/">
         <span class="logo-mark" aria-hidden="true">
-          <!-- Minimal maid-wing glyph (white on dark). Replace with your SVG later. -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12c6-6 12-6 18 0"/>
-            <path d="M6 12c4-4 8-4 12 0"/>
-            <path d="M9 12c2-2 4-2 6 0"/>
-          </svg>
+          <img src="./Assets/logo.png" alt="MekaHime Logo" />
         </span>
         <span class="logo-type">MekaHime</span>
       </a>
@@ -215,22 +312,25 @@
 
   <main>
     <section class="hero">
+      <div class="global-animation-bg" id="global-animation-bg">
+        <img src="./Assets/Animation/0235.png" alt="Animation Frame" id="global-animation-img" />
+      </div>
       <div></div> <!-- Empty div for spacing -->
       <div class="hero-content">
-        <h1 class="hero-title">A portal to her world,<br/>on your desk</h1>
+        <h1 class="hero-title">A portal to her world,<br/>on your desk.</h1>
       </div>
     </section>
 
-    <section class="about-section">
+    <section class="about-section" id="about-section">
       <div class="about-content">
-        <h2 class="about-title">Building AI Companions from the Isekai</h2>
-        <p class="about-subtitle">MekaHime is a passion project by two UC&nbsp;Berkeley students to make AI companions feel <em>alive</em> — persistent, emotive, and present.
-        <br/>Imagine she is always there, waiting for you.</p>
+        <h2 class="about-title">Building AI Companions from the Isekai.</h2>
+        <p class="about-subtitle">MekaHime is a passion project by two anime lovers + UC&nbsp;Berkeley students to make AI companions with emotions and intentions.</p>
       </div>
     </section>
 
     <section id="waitlist" class="card" aria-labelledby="join-title">
-      <h3 id="join-title">Join the email list</h3>
+      <h3 id="join-title">Releasing in mid-2026</h3>
+      <p>Get early discounts, free merch giveaways, and project updates.</p>
       <!-- ✅ OPTION 1 (Formspree). Replace YOUR_FORM_ID below with your real form ID, or swap to Google Forms embed. -->
       <form id="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
         <div class="form-row">
@@ -242,24 +342,35 @@
       </form>
     </section>
 
-    <section id="animation-section" class="animation-section">
-      <div class="animation-container">
-        <div class="animation-frame" id="animation-frame"></div>
-      </div>
-    </section>
-
     <section id="community" class="socials" aria-label="Community links">
-      <!-- Replace the href values with your real links -->
-      <a class="link" href="https://discord.gg/your-invite" target="_blank" rel="noopener">Join our Discord</a>
-      <a class="link" href="https://youtube.com/@YourChannel" target="_blank" rel="noopener">Follow our YouTube</a>
-      <a class="link" href="https://instagram.com/yourhandle" target="_blank" rel="noopener">Follow our Instagram</a>
+      <h3>Follow our journey, or chat with founders.</h3>
+      <div class="social-links">
+        <!-- Replace the href values with your real links -->
+        <a class="link" href="https://discord.gg/PEV3hujKTb" target="_blank" rel="noopener">
+          <img src="./Assets/discord_logo.png" alt="Discord" class="social-logo">
+          Join our Discord
+        </a>
+        <a class="link" href="https://www.youtube.com/@MekaHime" target="_blank" rel="noopener">
+          <img src="./Assets/youtube_logo.png" alt="YouTube" class="social-logo">
+          Follow our YouTube
+        </a>
+        <a class="link" href="https://www.instagram.com/mekahime.inc/" target="_blank" rel="noopener">
+          <img src="./Assets/instagram_logo.png" alt="Instagram" class="social-logo">
+          Follow our Instagram
+        </a>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <div class="fineprint">© <span id="year"></span> MekaHime. All rights reserved.</div>
-    <div class="fineprint">Made with ❤️ in Berkeley.</div>
-  </footer>
+    <footer>
+      <div class="fineprint">© <span id="year"></span> MekaHime, Inc. All rights reserved.</div>
+      <div class="disclaimer">
+        Pearl is the official open-source model of APlayBox (模之屋) and has no affiliation or partnership with this project or team.<br>
+        This presentation only borrows the model assets under APlayBox's licensing terms.<br>
+        Dipal's "Digital Companion" project and APlayBox have an official IP collaboration, where Pearl serves as their mascot.<br>
+        This project has no relation whatsoever with Dipal.
+      </div>
+    </footer>
 
   <script>
     // Update year
@@ -288,64 +399,37 @@
     });
 
     // Scroll-triggered animation
-    const FRAME_SKIP = 5; // Skip every 5 frames - easily adjustable
-    const TOTAL_FRAMES = 596; // Total number of frames
+    const FRAME_SKIP = 1; // Skip every 5 frames - easily adjustable
+    const START_FRAME = 235; // Starting frame number
+    const END_FRAME = 830; // Ending frame number
+    const TOTAL_FRAMES = END_FRAME - START_FRAME + 1; // Total number of frames
     const ANIMATION_FRAMES = Math.floor(TOTAL_FRAMES / FRAME_SKIP); // Number of frames to use
     
     let isAnimating = false;
     let currentFrame = 0;
     
     function getFrameNumber(index) {
-      return String(index * FRAME_SKIP + 1).padStart(3, '0');
+      return String(START_FRAME + index * FRAME_SKIP).padStart(4, '0');
     }
     
     function updateAnimationFrame() {
-      const frameElement = document.getElementById('animation-frame');
+      const frameElement = document.getElementById('global-animation-img');
       const frameNumber = getFrameNumber(currentFrame);
-      frameElement.style.backgroundImage = `url('./Assets/Animation/frame_${frameNumber}.png')`;
+      frameElement.src = `./Assets/Animation/${frameNumber}.png`;
     }
     
     function handleScroll() {
-      const aboutSection = document.querySelector('.about-section');
-      const animationSection = document.getElementById('animation-section');
+      // Calculate scroll progress from top of page to bottom
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollProgress = Math.max(0, Math.min(1, scrollTop / documentHeight));
       
-      // Handle about section video background
-      const aboutRect = aboutSection.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+      // Map scroll progress to frame index
+      const frameIndex = Math.floor(scrollProgress * ANIMATION_FRAMES);
       
-      if (aboutRect.top < windowHeight && aboutRect.bottom > 0) {
-        aboutSection.classList.add('video-background');
-      } else {
-        aboutSection.classList.remove('video-background');
-      }
-      
-      // Handle animation section
-      const rect = animationSection.getBoundingClientRect();
-      
-      // Check if animation section is in view
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        if (!isAnimating) {
-          isAnimating = true;
-          animationSection.querySelector('.animation-frame').classList.add('visible');
-        }
-        
-        // Calculate scroll progress through the animation section
-        const sectionHeight = rect.height;
-        const scrollProgress = Math.max(0, Math.min(1, (windowHeight - rect.top) / (windowHeight + sectionHeight)));
-        
-        // Map scroll progress to frame index
-        const frameIndex = Math.floor(scrollProgress * ANIMATION_FRAMES);
-        
-        if (frameIndex !== currentFrame && frameIndex < ANIMATION_FRAMES) {
-          currentFrame = frameIndex;
-          updateAnimationFrame();
-        }
-      } else {
-        if (isAnimating) {
-          isAnimating = false;
-          animationSection.querySelector('.animation-frame').classList.remove('visible');
-          currentFrame = 0;
-        }
+      if (frameIndex !== currentFrame && frameIndex < ANIMATION_FRAMES) {
+        currentFrame = frameIndex;
+        updateAnimationFrame();
       }
     }
     

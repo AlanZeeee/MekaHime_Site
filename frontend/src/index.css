@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: rgb(74, 145, 245);
+    --color-secondary: #2d2d2d;
+    --color-darkbg: rgb(18, 24, 39);
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@font-face {
+    font-family: 'Fragile Bombers';
+    src: url('./assets/fonts/FragileBombers.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Rimouski';
+    src: url('/fonts/rimouski sb.otf') format('opentype');
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-50px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.animate-float-up {
+    animation: float-up 1s ease-out forwards;
+}
+
+.mask-image-gradient {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+@keyframes scroll-wheel-smooth {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+.animate-scroll-wheel-smooth {
+    animation: scroll-wheel-smooth 10s linear infinite;
+}
+
+@keyframes glow-gold {
+
+    0%,
+    10%,
+    100% {
+        box-shadow: 0 0 0px rgba(234, 179, 8, 0);
+        border-color: rgba(55, 65, 81, 1);
+    }
+
+    5% {
+        box-shadow: 0 0 30px rgba(234, 179, 8, 0.8);
+        border-color: rgba(234, 179, 8, 1);
+    }
+}
+
+.animate-glow-gold {
+    animation: glow-gold 30s infinite ease-in-out;
+}
+
+@font-face {
+    font-family: 'Architex';
+    src: url('/fonts/Architex.ttf') format('truetype');
+}
+
+body {
+    @apply bg-darkbg text-white font-sans;
+}
